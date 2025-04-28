@@ -1,0 +1,28 @@
+# Базовые библиотеки
+numpy
+pandas
+matplotlib
+seaborn
+
+# Machine Learning
+scikit-learn
+xgboost
+lightgbm
+
+# Neural Networks
+tensorflow
+keras
+
+# Time series
+statsmodels
+
+# Explainability
+shap
+
+# Notebooks
+jupyter
+notebook
+
+# Additional 
+scipy
+tqdm
