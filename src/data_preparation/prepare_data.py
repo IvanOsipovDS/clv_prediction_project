@@ -2,36 +2,18 @@
 
 import pandas as pd
 
-def load_raw_data(filepath: str) -> pd.DataFrame:
-    """
-    Load raw transaction data from a CSV file.
+def load_raw_data() -> pd.DataFrame:
+    purchases = pd.read_csv('data/raw/amazon-purchases.csv')
+    survey = pd.read_csv('data/raw/survey.csv')
 
-    Args:
-        filepath (str): Path to the CSV file.
+    purchases['Order date'] = pd.to_datetime(purchases['Order date'])
+    purchases['CustomerID'] = purchases['Survey ResponseID']
+    purchases['TotalPrice'] = purchases['Purchase price per unit'] * purchases['Quantity']
 
-    Returns:
-        pd.DataFrame: Loaded raw data as a pandas DataFrame.
-    """
-    return pd.read_csv(filepath)
+    df = purchases.merge(survey, on='Survey ResponseID', how='left')
+    return df
 
 
 def clean_data(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Clean the transaction data:
-    - Remove duplicates
-    - Handle missing values
-    - Fix column types if needed
-
-    Args:
-        df (pd.DataFrame): Raw transaction data.
-
-    Returns:
-        pd.DataFrame: Cleaned transaction data.
-    """
-    # Drop duplicate rows
-    df_cleaned = df.drop_duplicates()
-
-    # Fill missing values if necessary (placeholder)
-    # df_cleaned = df_cleaned.fillna(method='ffill')
-
-    return df_cleaned
+    # Простейшая очистка, можно дополнить
+    return df.dropna(subset=['CustomerID', 'Order date', 'TotalPrice'])
