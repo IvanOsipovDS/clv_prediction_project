@@ -3,11 +3,15 @@
 import pandas as pd
 
 # Import modules from src
-from data_preparation.prepare_data import load_raw_data, clean_data
-from feature_engineering.engineer_features import create_rfm_features
-from modeling.train_models import split_data, train_random_forest, train_xgboost, train_lightgbm, train_mlp
-from evaluation.evaluate_models import compare_models
-from explainability.shap_analysis import compute_shap_values, plot_shap_summary
+from src.data_preparation.prepare_data import load_raw_data, clean_data
+from src.feature_engineering.engineer_features import create_rfm_features
+from src.modeling.train_models import split_data, train_random_forest, train_xgboost, train_lightgbm, train_mlp
+from src.evaluation.evaluate_models import compare_models
+from src.explainability.shap_analysis import compute_shap_values, plot_shap_summary
+
+print("Loading and cleaning data...")
+raw_data = load_raw_data()
+clean_df = clean_data(raw_data)
 
 def run_clv_pipeline(data_path: str, customer_id_col: str, invoice_date_col: str, amount_col: str):
     """
@@ -25,7 +29,7 @@ def run_clv_pipeline(data_path: str, customer_id_col: str, invoice_date_col: str
 
     # Step 1: Load and clean data
     print("Loading and cleaning data...")
-    raw_data = load_raw_data(data_path)
+    raw_data = load_raw_data()
     clean_df = clean_data(raw_data)
 
     # Step 2: Feature Engineering

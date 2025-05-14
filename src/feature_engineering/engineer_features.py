@@ -2,8 +2,7 @@
 
 import pandas as pd
 
-from data_preparation.prepare_data import load_raw_data, clean_data
-from feature_engineering.engineer_features import create_rfm_features
+from src.data_preparation.prepare_data import load_raw_data, clean_data
 
 def create_rfm_features(df: pd.DataFrame, customer_id_col: str, invoice_date_col: str, amount_col: str) -> pd.DataFrame:
     """
