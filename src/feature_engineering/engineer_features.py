@@ -2,7 +2,7 @@
 
 import pandas as pd
 
-from src.data_preparation.prepare_data import load_raw_data, clean_data
+from src.data_preparation import prepare_data
 
 def create_rfm_features(df: pd.DataFrame, customer_id_col: str, invoice_date_col: str, amount_col: str) -> pd.DataFrame:
     """
@@ -53,11 +53,12 @@ def create_rfm_features(df: pd.DataFrame, customer_id_col: str, invoice_date_col
 
     return features_df
 
-df = clean_data(load_raw_data())
+purchases, survey = prepare_data.load_raw_data()
+df = prepare_data.clean_data(purchases)
 
 rfm_df = create_rfm_features(
     df,
-    customer_id_col='CustomerID',
-    invoice_date_col='Order date',
+    customer_id_col='Survey ResponseID',
+    invoice_date_col='Order Date',
     amount_col='TotalPrice'
 )
