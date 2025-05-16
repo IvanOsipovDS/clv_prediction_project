@@ -11,8 +11,6 @@ def load_raw_data():
     survey = pd.read_csv("data/raw/survey.csv")
 
     purchases["Order Date"] = pd.to_datetime(purchases["Order Date"])
-    
-    purchases = purchases[purchases["Order Date"] < CUTOFF_DATE]
 
     return purchases, survey
 
