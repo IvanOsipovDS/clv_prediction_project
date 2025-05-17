@@ -71,8 +71,11 @@ def create_clv_targets(df: pd.DataFrame, customer_id_col: str, invoice_date_col:
     """
     df_future = df[df[invoice_date_col] >= cutoff_date].copy()
 
-    if window_months:
-        df_future = df_future[df_future[invoice_date_col] < cutoff_date + pd.DateOffset(months=window_months)]
+    if window_months is not None:
+        df_future = df[
+            (df[invoice_date_col] >= cutoff_date) &
+            (df[invoice_date_col] < cutoff_date + pd.DateOffset(months=window_months))
+        ].copy()
 
     clv = df_future.groupby(customer_id_col)[amount_col].sum().rename('FutureCLV')
     clv_df = clv.to_frame()
