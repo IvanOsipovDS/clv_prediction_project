@@ -1,10 +1,8 @@
 # src/feature_engineering/engineer_features.py
 
 import pandas as pd
-
+import numpy as np
 from src.data_preparation import prepare_data
-
-cutoff_date = "2022-01-01"
 
 def create_rfm_features(df: pd.DataFrame, customer_id_col: str, invoice_date_col: str, amount_col: str) -> pd.DataFrame:
     """
@@ -43,10 +41,6 @@ def create_rfm_features(df: pd.DataFrame, customer_id_col: str, invoice_date_col
     # Mean time between purchases (Interpurchase Time)
     mean_days_between_purchases = lifespan / frequency
 
-    clv_12m = df[
-            (df[invoice_date_col] < cutoff_date + pd.DateOffset(months=12))
-        ].groupby(customer_id_col)[amount_col].sum()
-
     # Create a DataFrame with all features
     features_df = pd.DataFrame({
         'Recency': recency,
@@ -82,7 +76,7 @@ def create_clv_targets(df: pd.DataFrame, customer_id_col: str, invoice_date_col:
 
     clv = df_future.groupby(customer_id_col)[amount_col].sum().rename('FutureCLV')
     clv_df = clv.to_frame()
-    clv_df['LogFutureCLV'] = clv_df['FutureCLV'].apply(lambda x: pd.np.log1p(x))
+    clv_df['LogFutureCLV'] = clv_df['FutureCLV'].apply(lambda x: np.log1p(x))
 
     return clv_df.reset_index()
 
