@@ -4,6 +4,8 @@ import pandas as pd
 
 from src.data_preparation import prepare_data
 
+cutoff_date = "2022-01-01"
+
 def create_rfm_features(df: pd.DataFrame, customer_id_col: str, invoice_date_col: str, amount_col: str) -> pd.DataFrame:
     """
     Create RFM (Recency, Frequency, Monetary) features for each customer.
@@ -41,6 +43,10 @@ def create_rfm_features(df: pd.DataFrame, customer_id_col: str, invoice_date_col
     # Mean time between purchases (Interpurchase Time)
     mean_days_between_purchases = lifespan / frequency
 
+    clv_12m = df[
+            (df[invoice_date_col] < cutoff_date + pd.DateOffset(months=12))
+        ].groupby(customer_id_col)[amount_col].sum()
+
     # Create a DataFrame with all features
     features_df = pd.DataFrame({
         'Recency': recency,
@@ -52,6 +58,33 @@ def create_rfm_features(df: pd.DataFrame, customer_id_col: str, invoice_date_col
     })
 
     return features_df
+
+def create_clv_targets(df: pd.DataFrame, customer_id_col: str, invoice_date_col: str, amount_col: str,
+                        cutoff_date: pd.Timestamp, window_months: int = None) -> pd.DataFrame:
+    """
+    Create CLV targets for a given cutoff date.
+
+    Args:
+        df (pd.DataFrame): Cleaned transaction data.
+        customer_id_col (str): Name of the customer ID column.
+        invoice_date_col (str): Name of the transaction date column.
+        amount_col (str): Name of the transaction amount column.
+        cutoff_date (pd.Timestamp): Date to split past and future.
+        window_months (int, optional): If specified, computes CLV only for a fixed period (e.g., 12 months).
+
+    Returns:
+        pd.DataFrame: DataFrame with CLV targets (and log-transformed versions).
+    """
+    df_future = df[df[invoice_date_col] >= cutoff_date].copy()
+
+    if window_months:
+        df_future = df_future[df_future[invoice_date_col] < cutoff_date + pd.DateOffset(months=window_months)]
+
+    clv = df_future.groupby(customer_id_col)[amount_col].sum().rename('FutureCLV')
+    clv_df = clv.to_frame()
+    clv_df['LogFutureCLV'] = clv_df['FutureCLV'].apply(lambda x: pd.np.log1p(x))
+
+    return clv_df.reset_index()
 
 purchases, survey = prepare_data.load_raw_data()
 df = prepare_data.clean_data(purchases)
