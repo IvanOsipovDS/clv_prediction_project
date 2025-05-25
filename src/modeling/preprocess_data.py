@@ -12,7 +12,7 @@ def load_modeling_data(path: str = "data/processed/rfm_clv.csv", target_col: str
     """
     df = pd.read_csv(path)
 
-    X = df.drop(columns=[target_col])
+    X = df.drop(columns=[target_col, "Survey ResponseID"])
     y = df[target_col]
 
     return train_test_split(X, y, test_size=0.2, random_state=42)
