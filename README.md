@@ -39,17 +39,17 @@ clv-prediction/
 
 git clone https://github.com/yourusername/clv-prediction.git
 cd clv-prediction
-2. Install Dependencies
-bash
-Copy
-Edit
+### 2. Install Dependencies
+
 pip install -r requirements.txt
-3. Run Notebooks in Order
-1_EDA.ipynb → Data prep, feature engineering, and target creation
 
-2_modeling.ipynb → Train/test split, modeling, evaluation
+## 📌 Notebooks
 
-3_interpretation.ipynb → SHAP-based model interpretability
+| Notebook | Purpose |
+|----------|---------|
+| `01_EDA.ipynb` | Data loading, preprocessing, and feature engineering |
+| `02_modeling.ipynb`    | PCA, clustering, and cluster analysis |
+| `03_interpretationn.ipynb` | Static and interactive visualizations |
 
 🧠 Models Used
 Model       	  R² Score
@@ -95,11 +95,9 @@ Try stacking/ensemble techniques
 
 Segment customers and customize predictions per group
 
-📎 Author
-Ivan Osipov
+## 🙋 Author
 
-LinkedIn
-
-Portfolio
-
-Email
+**Ivan Osipov**  
+📍 Based in Buenos Aires  
+💼 Data Scientist  
+🌐 [LinkedIn Profile](https://www.linkedin.com/in/ivan-osipov-dsml/)
