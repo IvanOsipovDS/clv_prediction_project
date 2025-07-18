@@ -1,35 +1,38 @@
 # 🧮 Customer Lifetime Value Prediction
 
-This project aims to predict the Customer Lifetime Value (CLV) based on customer transactions and survey data. The goal is to help businesses identify high-value customers and allocate marketing resources efficiently.
+This project predicts the Customer Lifetime Value (CLV) for e-commerce users based on their past purchase behavior. The objective is to help businesses identify high-value customers and make informed marketing decisions.
+
+---
 
 ## 📌 Key Highlights
 
-- Predicts **Future CLV** for a 12-month window using historical data.
-- Combines **RFM** features and engineered time-based indicators.
-- Compares multiple regression models: **Random Forest**, **XGBoost**, **LightGBM**, and **Neural Network (MLP)**.
-- Applies **SHAP** for global and local interpretability.
+- Predicts **12-month future CLV** using historical RFM features.
+- Models compared: **Random Forest**, **XGBoost**, **LightGBM**, **MLP (Neural Network)**.
+- Uses **SHAP** for model interpretability at global and individual levels.
 
 ---
 
 ## 📁 Project Structure
 
+```
 clv-prediction/
 │
-├── data/ # Raw and sample data files (excluding sensitive)
+├── data/                        # Raw and sample data (no sensitive info)
 ├── notebooks/
-│ ├── 1_EDA.ipynb # Data cleaning, RFM calculation, target generation
-│ ├── 2_modeling.ipynb # Model training and evaluation
-│ └── 3_interpretation.ipynb # SHAP analysis and interpretability
+│   ├── 1_EDA.ipynb              # Feature engineering, target creation
+│   ├── 2_modeling.ipynb         # Model training and evaluation
+│   └── 3_interpretation.ipynb   # SHAP interpretability
 │
 ├── src/
-│ ├── data_preparation/ # Loading and cleaning scripts
-│ ├── feature_engineering/ # RFM and CLV target computation
-│ ├── modeling/ # Training and prediction logic
-│ └── evaluation/ # Metrics and comparison utilities
+│   ├── data_preparation/        # Data loading and cleaning
+│   ├── feature_engineering/     # RFM and CLV features
+│   ├── modeling/                # Model training scripts
+│   └── evaluation/              # Metrics and visualization
 │
-├── models/ # Trained model files (optional)
-├── requirements.txt # Dependencies
+├── models/                      # Trained model files (optional)
+├── requirements.txt             # Python dependencies
 └── README.md
+```
 
 ---
 
@@ -37,67 +40,72 @@ clv-prediction/
 
 ### 1. Clone the Repository
 
+```bash
 git clone https://github.com/yourusername/clv-prediction.git
 cd clv-prediction
+```
+
 ### 2. Install Dependencies
 
+```bash
 pip install -r requirements.txt
+```
 
-## 📌 Notebooks
+### 3. Run Jupyter Notebooks in Order
 
-| Notebook | Purpose |
-|----------|---------|
-| `01_EDA.ipynb` | Data loading, preprocessing, and feature engineering |
-| `02_modeling.ipynb`    | PCA, clustering, and cluster analysis |
-| `03_interpretationn.ipynb` | Static and interactive visualizations |
+- `1_EDA.ipynb`: Feature generation + target labels
+- `2_modeling.ipynb`: Train & evaluate regression models
+- `3_interpretation.ipynb`: SHAP-based interpretation
 
-🧠 Models Used
-Model       	  R² Score
-Random Forest	   ~0.532
-XGBoost	         ~0.514
-LightGBM	       ~0.534
-MLP (Neural)	   ~0.560
+---
 
-All models were trained on historical RFM-style features to predict future 12-month CLV.
+## 🧠 Models and Performance
 
-📊 Feature Engineering
-The dataset includes:
+| Model        | R² Score |
+|--------------|----------|
+| Random Forest| ~0.51    |
+| XGBoost      | ~0.45    |
+| LightGBM     | **~0.56** |
+| MLP (Neural) | ~0.52    |
 
-RFM Metrics: Recency, Frequency, Monetary
+All models were trained to predict **Log-transformed Future CLV**.
 
-Derived Metrics:
+---
 
-Average Purchase Value
+## 📊 Features Used
 
-Customer Lifespan
+- **Recency**: Days since last purchase  
+- **Frequency**: Number of purchases  
+- **Monetary**: Total spend before cutoff  
+- **AveragePurchaseValue**  
+- **CustomerLifespan**: First → last purchase  
+- **MeanDaysBetweenPurchases**
 
-Mean Days Between Purchases
+**Target**:  
+- `FutureCLV`: Revenue after cutoff date  
+- `LogFutureCLV`: Log-transformed for modeling
 
-Targets were calculated as:
+---
 
-FutureCLV: Future revenue after cutoff
+## 🔍 SHAP Interpretability
 
-LogFutureCLV: Log-transformed target used for modeling
+- **Global Feature Importance**: Highlights most influential variables across all customers  
+- **Local Explanation**: Understand individual prediction drivers
 
-📈 Interpretation
-Using SHAP (SHapley Additive exPlanations):
+---
 
-Global importance: Frequency, Recency, and Lifespan were most impactful
+## 💡 Future Work
 
-Local explanations: Individual predictions can be traced to feature influence
+- Feature enhancement (behavioral/temporal data)
+- Model improvement via **Stacking/Blending**
+- Customer segmentation before modeling
+- Time-series CLV estimation
 
-<!-- Optional image preview -->
+---
 
-💡 Future Improvements
-Add new features (e.g. session behavior, geo location)
-
-Try stacking/ensemble techniques
-
-Segment customers and customize predictions per group
-
-## 🙋 Author
+## 📎 Author
 
 **Ivan Osipov**  
-📍 Based in Buenos Aires  
-💼 Data Scientist  
-🌐 [LinkedIn Profile](https://www.linkedin.com/in/ivan-osipov-dsml/)
+[GitHub Portfolio](https://github.com/IvanOsipovDS)  
+[LinkedIn](https://linkedin.com/in/...)  
+[Email](mailto:your.email@example.com)
