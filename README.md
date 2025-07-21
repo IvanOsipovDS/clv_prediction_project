@@ -107,5 +107,5 @@ All models were trained to predict **Log-transformed Future CLV**.
 
 **Ivan Osipov**  
 [GitHub Portfolio](https://github.com/IvanOsipovDS)  
-[LinkedIn]([https://www.linkedin.com/in/ivan-osipov-dsml/])  
+[LinkedIn](https://www.linkedin.com/in/ivan-osipov-dsml/)  
 [Email](mailto:ivan.osipov.job.mail@gmail.com)
