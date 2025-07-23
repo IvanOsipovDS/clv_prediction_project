@@ -106,6 +106,9 @@ All models were trained to predict **Log-transformed Future CLV**.
 ## 📎 Author
 
 **Ivan Osipov** 
+
 📍 Based in Buenos Aires
+
 💼 Data Scientist
+
 [LinkedIn](https://www.linkedin.com/in/ivan-osipov-dsml/)
